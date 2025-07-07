@@ -10,7 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
+  provider: ^6.1.5
+  shared_preferences: ^2.5.3
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
@@ -19,5 +23,11 @@ dev_dependencies:
 
   flutter_lints: ^4.0.0
 
+flutter_icons:
+  android: true
+  ios: true
+  windows: true
+
 flutter:
   uses-material-design: true
+  generate: true
