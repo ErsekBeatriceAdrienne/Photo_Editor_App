@@ -1,5 +1,9 @@
 {
   "@@locale": "hu",
   "title": "Demó",
-  "increment": "Növelés"
+  "back_button_text": "Vissza",
+  "profile_page_title": "Fiók",
+
+  "not_logged_in": "Nincs bejelentkezve",
+  "logged_in_as": "Bejelentkezve"
 }

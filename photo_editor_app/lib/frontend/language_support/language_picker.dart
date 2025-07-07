@@ -3,7 +3,12 @@ import 'package:photo_editor_app/frontend/language_support/LocaleProvider.dart';
 import 'package:provider/provider.dart';
 
 class LanguagePicker extends StatelessWidget {
-  const LanguagePicker({super.key});
+  const LanguagePicker({
+    super.key,
+    required this.isDarkMode
+  });
+
+  final bool isDarkMode;
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +17,9 @@ class LanguagePicker extends StatelessWidget {
 
     return DropdownButtonHideUnderline(
       child: DropdownButton<Locale>(
-        icon: const Icon(Icons.language, color: Colors.black),
-        borderRadius: BorderRadius.circular(12),
+        icon: const Icon(Icons.language),
+
+      borderRadius: BorderRadius.circular(12),
         onChanged: (Locale? newLocale) {
           if (newLocale != null) {
             provider.setLocale(newLocale);

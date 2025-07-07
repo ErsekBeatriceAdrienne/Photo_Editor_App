@@ -1,5 +1,9 @@
 {
   "@@locale": "en",
   "title": "Demo",
-  "increment": "Increment"
+  "back_button_text": "Back",
+  "profile_page_title": "Profile",
+
+  "not_logged_in": "Not signed in",
+  "logged_in_as": "Signed in"
 }
