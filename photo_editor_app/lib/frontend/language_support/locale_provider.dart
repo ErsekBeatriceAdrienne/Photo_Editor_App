@@ -42,7 +42,6 @@ class L10n {
   static const all = [
     Locale('en'),
     Locale('hu')
-    //Locale('ro'),
   ];
 
   static String getLanguageName(String code) {

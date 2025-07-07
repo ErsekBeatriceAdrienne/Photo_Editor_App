@@ -5,5 +5,10 @@
   "profile_page_title": "Fiók",
 
   "not_logged_in": "Nincs bejelentkezve",
-  "logged_in_as": "Bejelentkezve"
+  "logged_in_as": "Bejelentkezve",
+
+  "permission_required_title": "Engedély szükséges",
+  "permission_required_message": "A teljes funkcionalitás érdekében kérlek, adj engedélyt a galéria és fájlok elérésére.",
+  "go_to_settings": "Beállítások megnyitása",
+  "cancel": "Mégse"
 }

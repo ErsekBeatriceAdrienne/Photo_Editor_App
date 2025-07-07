@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:photo_editor_app/frontend/language_support/LocaleProvider.dart';
+import 'package:photo_editor_app/frontend/language_support/locale_provider.dart';
 import 'package:provider/provider.dart';
 
 class LanguagePicker extends StatelessWidget {

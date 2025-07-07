@@ -5,5 +5,10 @@
   "profile_page_title": "Profile",
 
   "not_logged_in": "Not signed in",
-  "logged_in_as": "Signed in"
+  "logged_in_as": "Signed in",
+
+  "permission_required_title": "Permission Required",
+  "permission_required_message": "To access the gallery and files, please grant permission.",
+  "go_to_settings": "Go to Settings",
+  "cancel": "Cancel"
 }

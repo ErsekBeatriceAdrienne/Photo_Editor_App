@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:photo_editor_app/frontend/language_support/LocaleProvider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:photo_editor_app/frontend/language_support/locale_provider.dart';
 import 'package:photo_editor_app/frontend/pages/home/home_page.dart';
 import 'dart:io' show Platform;
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'frontend/navigation_menu/phone_nav_menu.dart';
+import 'frontend/navigation_menu/windows_nav_menu.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,12 +36,62 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // Optimize theme mode
   ThemeMode _themeMode = ThemeMode.light;
+  Widget? _homeScreen;
 
-  void _toggleTheme() {
+  @override
+  void initState() {
+    super.initState();
+    _requestPermissions();
+    _loadThemeMode().then((_) => _startInitialization());
+  }
+
+  Future<void> _requestPermissions() async {
+    final photosStatus = await Permission.photos.request();
+    final videosStatus = await Permission.videos.request();
+    final storageStatus = await Permission.storage.request();
+  }
+
+  Future<void> _startInitialization() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
+
+    Widget nextScreen;
+    if (Platform.isWindows) {
+      nextScreen = WindowsMenu(
+        toggleTheme: _toggleTheme,
+        isDarkMode: _themeMode == ThemeMode.dark,
+        userId: userId,
+      );
+    } else {
+      nextScreen = AndroidMenu(
+        toggleTheme: _toggleTheme,
+        isDarkMode: _themeMode == ThemeMode.dark,
+        userId: userId,
+      );
+    }
+
     setState(() {
-      _themeMode =
-      _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+      _homeScreen = nextScreen;
+    });
+  }
+
+  Future<void> _loadThemeMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isDark = prefs.getBool('isDarkMode') ?? false;
+    setState(() {
+      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
+  Future<void> _toggleTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final newTheme = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+
+    await prefs.setBool('isDarkMode', newTheme == ThemeMode.dark);
+    setState(() {
+      _themeMode = newTheme;
     });
   }
 
@@ -62,11 +117,7 @@ class _MyAppState extends State<MyApp> {
       locale: provider.locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      home: HomePage(
-        onToggleTheme: _toggleTheme,
-        isDarkMode: _themeMode == ThemeMode.dark,
-        userId: null, // USERID implementation!
-      ),
+      home: _homeScreen ?? const Scaffold(body: Center(child: CircularProgressIndicator())),
     );
   }
 }
