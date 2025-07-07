@@ -48,13 +48,13 @@ class _MyAppState extends State<MyApp> {
       title: 'Lixy',
       themeMode: _themeMode,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
         brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+          seedColor: Colors.blueAccent,
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
@@ -62,13 +62,10 @@ class _MyAppState extends State<MyApp> {
       locale: provider.locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      home: MyHomePage(
-        title: 'Flutter Theme Demo',
+      home: HomePage(
         onToggleTheme: _toggleTheme,
         isDarkMode: _themeMode == ThemeMode.dark,
       ),
     );
   }
 }
-
-
