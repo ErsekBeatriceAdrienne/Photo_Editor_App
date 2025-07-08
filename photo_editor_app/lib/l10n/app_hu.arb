@@ -8,7 +8,7 @@
   "home_page_title": "Főoldal",
   "edited_page_title": "Szerkesztett képek",
   "ai_page_title": "AI generálás",
-  "edit_page_title": "Fotó szerkesztése",
+  "edit_page_title": "Szerkesztés",
 
   "not_logged_in": "Nincs bejelentkezve",
   "logged_in_as": "Bejelentkezve",
@@ -16,5 +16,18 @@
   "permission_required_title": "Engedély szükséges",
   "permission_required_message": "A teljes funkcionalitás érdekében kérlek, adj engedélyt a galéria és fájlok elérésére.",
   "go_to_settings": "Beállítások megnyitása",
-  "cancel": "Mégse"
+  "cancel": "Mégse",
+
+  "collage_button_text": "Készíts kollázsokat",
+  "generate_button_text": "Generálj Ai-val",
+  "filters_for_image_button_text": "Filterek alkalmazása",
+  "crop_image_button_text": "Átméretezés",
+  "frames_button_text": "Rámák",
+
+  "photos_section_text": "Kép szerkesztése",
+  "videos_section_text": "Videó szerkesztése",
+
+  "clips_button_text": "Klippek",
+  "movies_button_text": "Film készítés",
+  "subtitles_button_text": "Felirat készítés"
 }

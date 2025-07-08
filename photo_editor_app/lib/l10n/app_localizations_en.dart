@@ -28,7 +28,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ai_page_title => 'Generate with AI';
 
   @override
-  String get edit_page_title => 'Edit photo';
+  String get edit_page_title => 'Edit';
 
   @override
   String get not_logged_in => 'Not signed in';
@@ -47,4 +47,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get collage_button_text => 'Create collages';
+
+  @override
+  String get generate_button_text => 'Generate with Ai';
+
+  @override
+  String get filters_for_image_button_text => 'Apply filters';
+
+  @override
+  String get crop_image_button_text => 'Crop and resize';
+
+  @override
+  String get frames_button_text => 'Frames';
+
+  @override
+  String get photos_section_text => 'Edit photo';
+
+  @override
+  String get videos_section_text => 'Edit video';
+
+  @override
+  String get clips_button_text => 'Clips';
+
+  @override
+  String get movies_button_text => 'Movie maker';
+
+  @override
+  String get subtitles_button_text => 'Create subtitle';
 }
