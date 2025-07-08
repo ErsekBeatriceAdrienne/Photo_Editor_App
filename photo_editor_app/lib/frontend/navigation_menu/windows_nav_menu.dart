@@ -3,6 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../pages/collages/collage_main_page.dart';
 import '../pages/erase_background/eraser.dart';
+import '../pages/gallery/edited_photos.dart';
+import '../pages/generate_ai/ai.dart';
 import '../pages/home/home_page.dart';
 
 class WindowsMenu extends StatefulWidget {
@@ -29,7 +31,9 @@ class _WindowsMenuState extends State<WindowsMenu> {
     return [
       HomePage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
       CollagePage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
-      EraseBackgroundPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode)
+      EraseBackgroundPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
+      AiPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
+      EditedPhotosPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode)
     ];
   }
 

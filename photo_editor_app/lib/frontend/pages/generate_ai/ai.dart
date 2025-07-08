@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class CollagePage extends StatelessWidget {
-  const CollagePage({
+class AiPage extends StatelessWidget {
+  const AiPage({
     super.key,
     required this.onToggleTheme,
     required this.isDarkMode,
@@ -29,7 +29,7 @@ class CollagePage extends StatelessWidget {
                 automaticallyImplyLeading: false,
                 centerTitle: true,
                 title: Text(
-                  AppLocalizations.of(context)!.collage_page_title,
+                  AppLocalizations.of(context)!.profile_page_title,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

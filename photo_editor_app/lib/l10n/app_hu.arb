@@ -2,6 +2,8 @@
   "@@locale": "hu",
   "title": "Demó",
   "back_button_text": "Vissza",
+
+  "collage_page_title": "Készíts kollázsokat",
   "profile_page_title": "Fiók",
 
   "not_logged_in": "Nincs bejelentkezve",

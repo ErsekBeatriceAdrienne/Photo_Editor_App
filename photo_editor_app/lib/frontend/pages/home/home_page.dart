@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:photo_editor_app/frontend/functionalities/basic_functionality.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../profile/profile_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,10 +22,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Color _accentColor = Colors.blueAccent;
 
   @override
   void initState() {
     super.initState();
+    _loadAccentColor();
+  }
+
+  Future<void> _loadAccentColor() async {
+    final prefs = await SharedPreferences.getInstance();
+    final colorString = prefs.getString('accentColor') ?? '#448AFF';
+    setState(() {
+      _accentColor = Essentials().colorFromHex(colorString);
+    });
   }
 
   @override
@@ -45,8 +56,8 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                      onTap: () async {
+                        final shouldRefresh = await Navigator.push(
                           context,
                           Essentials().createSlideRoute(
                             ProfilePage(
@@ -56,6 +67,10 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         );
+
+                        if (shouldRefresh == true) {
+                          await _loadAccentColor();
+                        }
                       },
                       child: widget.userId == null
                           ? const Icon(Icons.person, size: 24)
@@ -85,13 +100,7 @@ class _HomePageState extends State<HomePage> {
                 sliver: SliverList(
                   delegate: SliverChildListDelegate(
                     [
-                      Text(AppLocalizations.of(context)!.permission_required_message,
-                        style: const TextStyle(
-                          fontSize: 100,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFDFAEE8),
-                        ),
-                      ),
+
                     ],
                   ),
                 ),

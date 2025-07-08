@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:photo_editor_app/frontend/functionalities/basic_functionality.dart';
 import 'package:photo_editor_app/frontend/language_support/locale_provider.dart';
 import 'package:photo_editor_app/frontend/pages/home/home_page.dart';
 import 'dart:io' show Platform;
@@ -39,12 +40,22 @@ class _MyAppState extends State<MyApp> {
   // Optimize theme mode
   ThemeMode _themeMode = ThemeMode.light;
   Widget? _homeScreen;
+  Color _accentColor = Colors.blueAccent;
 
   @override
   void initState() {
     super.initState();
     _requestPermissions();
+    _loadAccentColor();
     _loadThemeMode().then((_) => _startInitialization());
+  }
+
+  Future<void> _loadAccentColor() async {
+    final prefs = await SharedPreferences.getInstance();
+    final colorString = prefs.getString('accentColor') ?? '#448AFF';
+    setState(() {
+      _accentColor = Essentials().colorFromHex(colorString);
+    });
   }
 
   Future<void> _requestPermissions() async {
@@ -103,13 +114,13 @@ class _MyAppState extends State<MyApp> {
       title: 'Lixy',
       themeMode: _themeMode,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: _accentColor),
         useMaterial3: true,
         brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blueAccent,
+          seedColor: _accentColor,
           brightness: Brightness.dark,
         ),
         useMaterial3: true,

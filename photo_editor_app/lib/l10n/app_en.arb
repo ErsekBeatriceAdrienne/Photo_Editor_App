@@ -2,6 +2,8 @@
   "@@locale": "en",
   "title": "Demo",
   "back_button_text": "Back",
+
+  "collage_page_title": "Collage maker",
   "profile_page_title": "Profile",
 
   "not_logged_in": "Not signed in",

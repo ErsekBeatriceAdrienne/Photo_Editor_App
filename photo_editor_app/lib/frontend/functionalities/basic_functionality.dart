@@ -22,4 +22,10 @@ class Essentials {
       },
     );
   }
+
+  String colorToHex(Color color) => '#${color.value.toRadixString(16).padLeft(8, '0')}';
+  Color colorFromHex(String hex) {
+    hex = hex.replaceAll('#', '');
+    return Color(int.parse(hex, radix: 16));
+  }
 }
