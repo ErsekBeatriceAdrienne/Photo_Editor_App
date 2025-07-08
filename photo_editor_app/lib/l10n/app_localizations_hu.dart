@@ -28,7 +28,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get ai_page_title => 'AI generálás';
 
   @override
-  String get edit_page_title => 'Fotó szerkesztése';
+  String get edit_page_title => 'Szerkesztés';
 
   @override
   String get not_logged_in => 'Nincs bejelentkezve';
@@ -47,4 +47,34 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get cancel => 'Mégse';
+
+  @override
+  String get collage_button_text => 'Készíts kollázsokat';
+
+  @override
+  String get generate_button_text => 'Generálj Ai-val';
+
+  @override
+  String get filters_for_image_button_text => 'Filterek alkalmazása';
+
+  @override
+  String get crop_image_button_text => 'Átméretezés';
+
+  @override
+  String get frames_button_text => 'Rámák';
+
+  @override
+  String get photos_section_text => 'Kép szerkesztése';
+
+  @override
+  String get videos_section_text => 'Videó szerkesztése';
+
+  @override
+  String get clips_button_text => 'Klippek';
+
+  @override
+  String get movies_button_text => 'Film készítés';
+
+  @override
+  String get subtitles_button_text => 'Felirat készítés';
 }

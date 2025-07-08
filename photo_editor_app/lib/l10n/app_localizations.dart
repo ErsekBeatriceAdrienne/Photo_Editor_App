@@ -140,7 +140,7 @@ abstract class AppLocalizations {
   /// No description provided for @edit_page_title.
   ///
   /// In en, this message translates to:
-  /// **'Edit photo'**
+  /// **'Edit'**
   String get edit_page_title;
 
   /// No description provided for @not_logged_in.
@@ -178,6 +178,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @collage_button_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Create collages'**
+  String get collage_button_text;
+
+  /// No description provided for @generate_button_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate with Ai'**
+  String get generate_button_text;
+
+  /// No description provided for @filters_for_image_button_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply filters'**
+  String get filters_for_image_button_text;
+
+  /// No description provided for @crop_image_button_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop and resize'**
+  String get crop_image_button_text;
+
+  /// No description provided for @frames_button_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Frames'**
+  String get frames_button_text;
+
+  /// No description provided for @photos_section_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit photo'**
+  String get photos_section_text;
+
+  /// No description provided for @videos_section_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit video'**
+  String get videos_section_text;
+
+  /// No description provided for @clips_button_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Clips'**
+  String get clips_button_text;
+
+  /// No description provided for @movies_button_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Movie maker'**
+  String get movies_button_text;
+
+  /// No description provided for @subtitles_button_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Create subtitle'**
+  String get subtitles_button_text;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

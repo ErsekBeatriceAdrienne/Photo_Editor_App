@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../pages/edit_photo/editing.dart';
-import '../pages/gallery/edited_photos.dart';
+import '../pages/edited_photos/edited_photos.dart';
 import '../pages/generate_ai/ai.dart';
 import '../pages/home/home_page.dart';
 import '../../../l10n/app_localizations.dart';

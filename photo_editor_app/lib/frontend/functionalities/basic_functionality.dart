@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 class Essentials {
   Route createSlideRoute(Widget page) {
@@ -28,4 +30,11 @@ class Essentials {
     hex = hex.replaceAll('#', '');
     return Color(int.parse(hex, radix: 16));
   }
+
+  Color lighten(Color color, [double amount = 0.3]) {
+    final hsl = HSLColor.fromColor(color);
+    final hslLight = hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
+    return hslLight.toColor();
+  }
+
 }
