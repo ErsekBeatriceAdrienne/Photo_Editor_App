@@ -110,6 +110,12 @@ abstract class AppLocalizations {
   /// **'Back'**
   String get back_button_text;
 
+  /// No description provided for @collage_page_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Collage maker'**
+  String get collage_page_title;
+
   /// No description provided for @profile_page_title.
   ///
   /// In en, this message translates to:

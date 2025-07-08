@@ -1,10 +1,14 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import '../functionalities/basic_functionality.dart';
 import '../pages/collages/collage_main_page.dart';
 import '../pages/erase_background/eraser.dart';
+import '../pages/gallery/edited_photos.dart';
+import '../pages/generate_ai/ai.dart';
 import '../pages/home/home_page.dart';
+import '../../../l10n/app_localizations.dart';
 
 class AndroidMenu extends StatefulWidget
 {
@@ -27,17 +31,38 @@ class _AndroidMenuState extends State<AndroidMenu>
 {
   int _currentIndex = 0;
   final List<Widget> _pages = [];
+  late Color accentColor;
 
   @override
-  void initState()
-  {
+  void initState() {
     super.initState();
+    _loadAccentColor();
+    _initPages();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadAccentColor();
+  }
+
+
+  void _initPages() {
     _pages.addAll([
       HomePage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
       CollagePage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
-      EraseBackgroundPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode)
+      EraseBackgroundPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
+      AiPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
+      EditedPhotosPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode)
     ]);
-    //_preloadUserName();
+  }
+
+  Future<void> _loadAccentColor() async {
+    final prefs = await SharedPreferences.getInstance();
+    final colorString = prefs.getString('accentColor') ?? '#448AFF';
+    setState(() {
+      accentColor = Essentials().colorFromHex(colorString);
+    });
   }
 
   /*Future<void> _preloadUserName() async
@@ -77,6 +102,7 @@ class _AndroidMenuState extends State<AndroidMenu>
       setState(() {
         _currentIndex = index;
       });
+      _loadAccentColor();
     }
   }
 
@@ -104,10 +130,10 @@ class _AndroidMenuState extends State<AndroidMenu>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _buildNavItem(Icons.color_lens_outlined, 0),
+                        _buildNavItem(Icons.mode_edit_outline_outlined, 0),
                         _buildNavItem(Icons.view_agenda_outlined, 1),
                         _buildNavItem(Icons.compare, 2),
-                        _buildNavItem(Icons.diamond_outlined, 3),
+                        _buildNavItem(Icons.generating_tokens_outlined, 3),
                         _buildNavItem(Icons.folder_open_rounded, 4),
                       ],
                     ),
@@ -119,11 +145,12 @@ class _AndroidMenuState extends State<AndroidMenu>
         ],
       ),
     );
-
   }
 
   Widget _buildNavItem(IconData icon, int index) {
     bool isSelected = _currentIndex == index;
+    Color defaultColor = Theme.of(context).iconTheme.color ??
+        (widget.isDarkMode ? Colors.grey.shade600 : Colors.black87);
 
     return GestureDetector(
       onTap: () => _onTap(index),
@@ -132,27 +159,33 @@ class _AndroidMenuState extends State<AndroidMenu>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ShaderMask(
-              shaderCallback: (rect) {
-                return LinearGradient(
-                  colors: isSelected
-                      ? [Colors.blue, Colors.blueAccent]
-                      : [Colors.grey.shade400, Colors.black12],
+            if (isSelected)
+              ShaderMask(
+                blendMode: BlendMode.srcIn,
+                shaderCallback: (rect) => LinearGradient(
+                  colors: [
+                    accentColor.withOpacity(0.8),
+                    accentColor,
+                  ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                ).createShader(rect);
-              },
-              child: Icon(
+                ).createShader(rect),
+                child: Icon(
+                  icon,
+                  color: accentColor,
+                  size: 25.0,
+                ),
+              )
+            else
+              Icon(
                 icon,
-                color: Colors.white,
-                size: 31.0,
+                color: defaultColor.withOpacity(0.7),
+                size: 25.0,
               ),
-            ),
             const SizedBox(height: 4),
           ],
         ),
       ),
     );
   }
-
 }

@@ -15,6 +15,9 @@ class AppLocalizationsHu extends AppLocalizations {
   String get back_button_text => 'Vissza';
 
   @override
+  String get collage_page_title => 'Készíts kollázsokat';
+
+  @override
   String get profile_page_title => 'Fiók';
 
   @override

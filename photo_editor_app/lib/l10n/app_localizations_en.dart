@@ -15,6 +15,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get back_button_text => 'Back';
 
   @override
+  String get collage_page_title => 'Collage maker';
+
+  @override
   String get profile_page_title => 'Profile';
 
   @override
