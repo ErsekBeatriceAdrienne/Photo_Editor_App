@@ -6,9 +6,8 @@ import 'package:photo_editor_app/frontend/language_support/locale_provider.dart'
 import 'package:photo_editor_app/frontend/pages/home/home_page.dart';
 import 'dart:io' show Platform;
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'frontend/navigation_menu/phone_nav_menu.dart';
 import 'frontend/navigation_menu/windows_nav_menu.dart';
 

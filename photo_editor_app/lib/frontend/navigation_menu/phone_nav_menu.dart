@@ -2,13 +2,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../functionalities/basic_functionality.dart';
 import '../pages/collages/collage_main_page.dart';
 import '../pages/erase_background/eraser.dart';
 import '../pages/gallery/edited_photos.dart';
 import '../pages/generate_ai/ai.dart';
 import '../pages/home/home_page.dart';
+import '../../../l10n/app_localizations.dart';
 
 class AndroidMenu extends StatefulWidget
 {
@@ -145,7 +145,6 @@ class _AndroidMenuState extends State<AndroidMenu>
         ],
       ),
     );
-
   }
 
   Widget _buildNavItem(IconData icon, int index) {
