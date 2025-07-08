@@ -3,14 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_editor_app/frontend/functionalities/basic_functionality.dart';
 import 'package:photo_editor_app/frontend/language_support/locale_provider.dart';
-import 'package:photo_editor_app/frontend/pages/home/home_page.dart';
 import 'dart:io' show Platform;
 import 'package:provider/provider.dart';
 import '../../../l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'frontend/navigation_menu/phone_nav_menu.dart';
 import 'frontend/navigation_menu/windows_nav_menu.dart';
-import 'l10n/app_localizations.dart';
+import 'frontend/pages/profile/accent_color_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,9 +20,11 @@ Future<void> main() async {
   ]);
 
   runApp(
-    ChangeNotifierProvider(
-      // Provider for languages across app
-      create: (_) => LocaleProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => AccentColorProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -52,9 +53,14 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _loadAccentColor() async {
     final prefs = await SharedPreferences.getInstance();
-    final colorString = prefs.getString('accentColor') ?? '#448AFF';
+    final colorString = prefs.getString('accentColor');
+
     setState(() {
-      _accentColor = Essentials().colorFromHex(colorString);
+      if (colorString == null) {
+        _accentColor = Colors.blueAccent;
+      } else {
+        _accentColor = Essentials().colorFromHex(colorString);
+      }
     });
   }
 

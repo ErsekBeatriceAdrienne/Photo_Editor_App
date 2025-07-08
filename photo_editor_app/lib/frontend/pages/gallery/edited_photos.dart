@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../l10n/app_localizations.dart';
+import '../profile/accent_color_provider.dart';
 
 class EditedPhotosPage extends StatelessWidget {
   const EditedPhotosPage({
@@ -15,7 +19,14 @@ class EditedPhotosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accentColor = Provider.of<AccentColorProvider>(context).accentColor;
+    final backgroundColor = Theme.of(context).drawerTheme.backgroundColor ??
+        (Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF141414)
+            : Colors.grey[100]);
+
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Stack(
         children: [
           CustomScrollView(
@@ -28,12 +39,21 @@ class EditedPhotosPage extends StatelessWidget {
                 leadingWidth: 90,
                 automaticallyImplyLeading: false,
                 centerTitle: true,
+                // If this enabled than it's blurry
+                flexibleSpace: ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+                    child: Container(
+                      color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                    ),
+                  ),
+                ),
                 title: Text(
                   AppLocalizations.of(context)!.profile_page_title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent,
+                    color: accentColor,
                   ),
                 ),
               ),

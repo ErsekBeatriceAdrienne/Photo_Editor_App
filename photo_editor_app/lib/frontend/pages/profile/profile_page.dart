@@ -1,7 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../functionalities/basic_functionality.dart';
 import '../../language_support/language_picker.dart';
+import 'accent_color_provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({
@@ -20,40 +25,22 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  Color _accentColor = Colors.blueAccent;
 
   @override
   void initState() {
     super.initState();
-    _loadAccentColor();
-  }
-
-  Future<void> _loadAccentColor() async {
-    final prefs = await SharedPreferences.getInstance();
-    final colorString = prefs.getString('accentColor') ?? '#448AFF';
-    setState(() {
-      _accentColor = _colorFromHex(colorString);
-    });
-  }
-
-  Future<void> _setAccentColor(Color color) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('accentColor', _colorToHex(color));
-    setState(() {
-      _accentColor = color;
-    });
-  }
-
-  String _colorToHex(Color color) => '#${color.value.toRadixString(16).padLeft(8, '0')}';
-
-  Color _colorFromHex(String hex) {
-    hex = hex.replaceAll('#', '');
-    return Color(int.parse(hex, radix: 16));
   }
 
   @override
   Widget build(BuildContext context) {
+    final accentColor = Provider.of<AccentColorProvider>(context).accentColor;
+    final backgroundColor = Theme.of(context).drawerTheme.backgroundColor ??
+        (Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF141414)
+            : Colors.grey[100]);
+
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Stack(
         children: [
           CustomScrollView(
@@ -66,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 automaticallyImplyLeading: false,
                 leading: TextButton.icon(
                   style: TextButton.styleFrom(
-                    foregroundColor: _accentColor,
+                    foregroundColor: accentColor,
                     padding: const EdgeInsets.only(left: 8.0),
                   ),
                   onPressed: () {
@@ -85,12 +72,21 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 centerTitle: true,
+                // If this enabled than it's blurry
+                flexibleSpace: ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+                    child: Container(
+                      color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                    ),
+                  ),
+                ),
                 title: Text(
                   AppLocalizations.of(context)!.profile_page_title,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: _accentColor,
+                    color: accentColor,
                   ),
                 ),
                 actions: [
@@ -110,20 +106,21 @@ class _ProfilePageState extends State<ProfilePage> {
                   padding: const EdgeInsets.all(16.0),
                   child: IconButton(
                     icon: const Icon(Icons.palette, size: 32),
-                    color: _accentColor,
+                    color: accentColor,
                     tooltip: 'Accent szín kiválasztása',
-                    onPressed: () async {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) => AccentColorPickerBottomSheet(
-                          currentColor: _accentColor,
-                          onColorSelected: (newColor) async {
-                            await _setAccentColor(newColor);
-                            Navigator.pop(context, true); 
-                          },
-                        ),
-                      );
-                    },
+                      onPressed: () async {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => AccentColorPickerBottomSheet(
+                            currentColor: accentColor,
+                            onColorSelected: (newColor) async {
+                              // Ez a sor új:
+                              await Provider.of<AccentColorProvider>(context, listen: false).setAccentColor(newColor);
+                              Navigator.pop(context, true);
+                            },
+                          ),
+                        );
+                      }
                   ),
                 ),
 
@@ -135,59 +132,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-
-class AccentColorPickerBottomSheet extends StatelessWidget {
-  final Color currentColor;
-  final Function(Color) onColorSelected;
-
-  const AccentColorPickerBottomSheet({
-    super.key,
-    required this.currentColor,
-    required this.onColorSelected,
-  });
-
-  final List<Color> _colors = const [
-    Colors.blueAccent,
-    Colors.redAccent,
-    Colors.green,
-    Colors.orange,
-    Colors.purple,
-    Colors.pinkAccent,
-    Color(0xFFFFC1E3), // PinkAccent.shade100 alternatíva
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Wrap(
-        children: [
-          const ListTile(
-            title: Text('Válassz egy színt', style: TextStyle(fontWeight: FontWeight.bold)),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: _colors.map((color) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                    onColorSelected(color);
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: color,
-                    radius: 24,
-                    child: color == currentColor
-                        ? const Icon(Icons.check, color: Colors.white)
-                        : null,
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-

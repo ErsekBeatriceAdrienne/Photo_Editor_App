@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -28,6 +30,15 @@ class CollagePage extends StatelessWidget {
                 leadingWidth: 90,
                 automaticallyImplyLeading: false,
                 centerTitle: true,
+                // If this enabled than it's blurry
+                flexibleSpace: ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+                    child: Container(
+                      color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                    ),
+                  ),
+                ),
                 title: Text(
                   AppLocalizations.of(context)!.collage_page_title,
                   style: const TextStyle(
