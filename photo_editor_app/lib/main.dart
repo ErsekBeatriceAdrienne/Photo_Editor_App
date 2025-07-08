@@ -10,6 +10,7 @@ import '../../../l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'frontend/navigation_menu/phone_nav_menu.dart';
 import 'frontend/navigation_menu/windows_nav_menu.dart';
+import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

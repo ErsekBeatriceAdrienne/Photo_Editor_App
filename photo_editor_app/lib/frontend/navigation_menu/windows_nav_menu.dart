@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../l10n/app_localizations.dart';
-
 import '../pages/collages/collage_main_page.dart';
 import '../pages/erase_background/eraser.dart';
 import '../pages/gallery/edited_photos.dart';
