@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../pages/collages/collage_main_page.dart';
 import '../pages/erase_background/eraser.dart';
 import '../pages/home/home_page.dart';
