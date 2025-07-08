@@ -1,5 +1,3 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -21,6 +19,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profile_page_title => 'Profile';
 
   @override
+  String get home_page_title => 'Home';
+
+  @override
+  String get edited_page_title => 'Edited photos';
+
+  @override
+  String get ai_page_title => 'Generate with AI';
+
+  @override
+  String get edit_page_title => 'Edit photo';
+
+  @override
   String get not_logged_in => 'Not signed in';
 
   @override
@@ -30,8 +40,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permission_required_title => 'Permission Required';
 
   @override
-  String get permission_required_message =>
-      'To access the gallery and files, please grant permission.';
+  String get permission_required_message => 'To access the gallery and files, please grant permission.';
 
   @override
   String get go_to_settings => 'Go to Settings';

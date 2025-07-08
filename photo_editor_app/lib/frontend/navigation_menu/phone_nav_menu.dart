@@ -1,14 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../functionalities/basic_functionality.dart';
-import '../pages/collages/collage_main_page.dart';
-import '../pages/erase_background/eraser.dart';
+import 'package:provider/provider.dart';
+import '../pages/edit_photo/editing.dart';
 import '../pages/gallery/edited_photos.dart';
 import '../pages/generate_ai/ai.dart';
 import '../pages/home/home_page.dart';
 import '../../../l10n/app_localizations.dart';
+import '../pages/profile/accent_color_provider.dart';
 
 class AndroidMenu extends StatefulWidget
 {
@@ -31,38 +30,20 @@ class _AndroidMenuState extends State<AndroidMenu>
 {
   int _currentIndex = 0;
   final List<Widget> _pages = [];
-  late Color accentColor;
 
   @override
   void initState() {
     super.initState();
-    _loadAccentColor();
     _initPages();
   }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _loadAccentColor();
-  }
-
 
   void _initPages() {
     _pages.addAll([
       HomePage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
-      CollagePage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
-      EraseBackgroundPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
+      EditingPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
       AiPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
       EditedPhotosPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode)
     ]);
-  }
-
-  Future<void> _loadAccentColor() async {
-    final prefs = await SharedPreferences.getInstance();
-    final colorString = prefs.getString('accentColor') ?? '#448AFF';
-    setState(() {
-      accentColor = Essentials().colorFromHex(colorString);
-    });
   }
 
   /*Future<void> _preloadUserName() async
@@ -102,14 +83,20 @@ class _AndroidMenuState extends State<AndroidMenu>
       setState(() {
         _currentIndex = index;
       });
-      _loadAccentColor();
     }
   }
 
   @override
   Widget build(BuildContext context)
   {
+    final accentColor = Provider.of<AccentColorProvider>(context).accentColor;
+    final backgroundColor = Theme.of(context).drawerTheme.backgroundColor ??
+        (Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF141414)
+            : Colors.grey[100]);
+
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Stack(
         children: [
           _pages[_currentIndex],
@@ -130,11 +117,10 @@ class _AndroidMenuState extends State<AndroidMenu>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _buildNavItem(Icons.mode_edit_outline_outlined, 0),
-                        _buildNavItem(Icons.view_agenda_outlined, 1),
-                        _buildNavItem(Icons.compare, 2),
-                        _buildNavItem(Icons.generating_tokens_outlined, 3),
-                        _buildNavItem(Icons.folder_open_rounded, 4),
+                        _buildNavItem(Icons.home_outlined, 0, accentColor),
+                        _buildNavItem(Icons.photo_outlined, 1, accentColor),
+                        _buildNavItem(Icons.generating_tokens_outlined, 2, accentColor),
+                        _buildNavItem(Icons.folder_open_rounded, 3, accentColor),
                       ],
                     ),
                   ),
@@ -147,7 +133,7 @@ class _AndroidMenuState extends State<AndroidMenu>
     );
   }
 
-  Widget _buildNavItem(IconData icon, int index) {
+  Widget _buildNavItem(IconData icon, int index, Color accentColor) {
     bool isSelected = _currentIndex == index;
     Color defaultColor = Theme.of(context).iconTheme.color ??
         (widget.isDarkMode ? Colors.grey.shade600 : Colors.black87);
@@ -172,7 +158,6 @@ class _AndroidMenuState extends State<AndroidMenu>
                 ).createShader(rect),
                 child: Icon(
                   icon,
-                  color: accentColor,
                   size: 25.0,
                 ),
               )

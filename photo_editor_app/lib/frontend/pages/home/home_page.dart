@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:photo_editor_app/frontend/functionalities/basic_functionality.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:photo_manager/photo_manager.dart';
+import 'package:provider/provider.dart';
+import '../profile/accent_color_provider.dart';
 import '../profile/profile_page.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -22,29 +24,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Color _accentColor = Colors.blueAccent;
+  List<AssetEntity> _images = [];
 
   @override
   void initState() {
     super.initState();
-    _loadAccentColor();
-  }
-
-  Future<void> _loadAccentColor() async {
-    final prefs = await SharedPreferences.getInstance();
-    final colorString = prefs.getString('accentColor') ?? '#448AFF';
-    setState(() {
-      _accentColor = Essentials().colorFromHex(colorString);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final accentColor = Provider.of<AccentColorProvider>(context).accentColor;
+    final backgroundColor = Theme.of(context).drawerTheme.backgroundColor ??
+        (Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF141414)
+            : Colors.grey[100]);
+
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Stack(
         children: [
           CustomScrollView(
             slivers: [
+              // Appbar
               SliverAppBar(
                 backgroundColor: Colors.transparent,
                 pinned: true,
@@ -67,10 +68,6 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         );
-
-                        if (shouldRefresh == true) {
-                          await _loadAccentColor();
-                        }
                       },
                       child: widget.userId == null
                           ? const Icon(Icons.person, size: 24)
@@ -95,16 +92,11 @@ class _HomePageState extends State<HomePage> {
               ),
 
               // Body
-              SliverPadding(
-                padding: const EdgeInsets.all(16.0),
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
+              const SliverPadding(
+                padding: EdgeInsets.all(16.0),
 
-                    ],
-                  ),
-                ),
               ),
+
             ],
           ),
         ],

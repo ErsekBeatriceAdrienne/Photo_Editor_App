@@ -5,6 +5,10 @@
 
   "collage_page_title": "Collage maker",
   "profile_page_title": "Profile",
+  "home_page_title": "Home",
+  "edited_page_title": "Edited photos",
+  "ai_page_title": "Generate with AI",
+  "edit_page_title": "Edit photo",
 
   "not_logged_in": "Not signed in",
   "logged_in_as": "Signed in",

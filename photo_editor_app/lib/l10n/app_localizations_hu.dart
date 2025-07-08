@@ -1,5 +1,3 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -21,6 +19,18 @@ class AppLocalizationsHu extends AppLocalizations {
   String get profile_page_title => 'Fiók';
 
   @override
+  String get home_page_title => 'Főoldal';
+
+  @override
+  String get edited_page_title => 'Szerkesztett képek';
+
+  @override
+  String get ai_page_title => 'AI generálás';
+
+  @override
+  String get edit_page_title => 'Fotó szerkesztése';
+
+  @override
   String get not_logged_in => 'Nincs bejelentkezve';
 
   @override
@@ -30,8 +40,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get permission_required_title => 'Engedély szükséges';
 
   @override
-  String get permission_required_message =>
-      'A teljes funkcionalitás érdekében kérlek, adj engedélyt a galéria és fájlok elérésére.';
+  String get permission_required_message => 'A teljes funkcionalitás érdekében kérlek, adj engedélyt a galéria és fájlok elérésére.';
 
   @override
   String get go_to_settings => 'Beállítások megnyitása';
