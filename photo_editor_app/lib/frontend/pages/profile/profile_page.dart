@@ -95,9 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           builder: (context) => AccentColorPickerBottomSheet(
                             currentColor: accentColor,
                             onColorSelected: (newColor) async {
-                              // Ez a sor új:
                               await Provider.of<AccentColorProvider>(context, listen: false).setAccentColor(newColor);
-                              Navigator.pop(context, true);
                             },
                           ),
                         );
