@@ -125,12 +125,6 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get home_page_title;
 
-  /// No description provided for @edited_page_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Edited photos'**
-  String get edited_page_title;
-
   /// No description provided for @ai_page_title.
   ///
   /// In en, this message translates to:
@@ -142,6 +136,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit'**
   String get edit_page_title;
+
+  /// No description provided for @photo_editing_page_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get photo_editing_page_title;
+
+  /// No description provided for @videos_editing_page_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Videos'**
+  String get videos_editing_page_title;
+
+  /// No description provided for @generate_ai_page_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate'**
+  String get generate_ai_page_title;
+
+  /// No description provided for @edited_page_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edited photos and videos'**
+  String get edited_page_title;
 
   /// No description provided for @not_logged_in.
   ///

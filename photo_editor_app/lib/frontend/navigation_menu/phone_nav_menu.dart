@@ -2,12 +2,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../pages/edit_photo/editing.dart';
-import '../pages/edited_photos/edited_photos.dart';
+import '../pages/edited_files/edited_files_page.dart';
+import '../pages/editing_image/edit_images_page.dart';
+import '../pages/editing_video/edit_videos_page.dart';
 import '../pages/generate_ai/ai.dart';
-import '../pages/home/home_page.dart';
 import '../../../l10n/app_localizations.dart';
 import '../pages/profile/accent_color_provider.dart';
+import '../pages/profile/profile_page.dart';
 
 class AndroidMenu extends StatefulWidget
 {
@@ -39,10 +40,11 @@ class _AndroidMenuState extends State<AndroidMenu>
 
   void _initPages() {
     _pages.addAll([
-      HomePage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
-      EditingPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
+      EditImagesPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
+      EditVideosPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
       AiPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
-      EditedPhotosPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode)
+      EditedFilesPage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
+      ProfilePage(onToggleTheme: widget.toggleTheme, userId: widget.userId, isDarkMode: widget.isDarkMode),
     ]);
   }
 
@@ -112,15 +114,16 @@ class _AndroidMenuState extends State<AndroidMenu>
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
                   child: Container(
-                    color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                    color: backgroundColor?.withOpacity(0.5),
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _buildNavItem(Icons.home_outlined, 0, accentColor),
-                        _buildNavItem(Icons.photo_outlined, 1, accentColor),
+                        _buildNavItem(Icons.insert_photo_outlined, 0, accentColor),
+                        _buildNavItem(Icons.camera_roll_outlined, 1, accentColor),
                         _buildNavItem(Icons.generating_tokens_outlined, 2, accentColor),
                         _buildNavItem(Icons.folder_open_rounded, 3, accentColor),
+                        _buildNavItem(Icons.person, 4, accentColor),
                       ],
                     ),
                   ),

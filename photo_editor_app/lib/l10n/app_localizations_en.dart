@@ -22,13 +22,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home_page_title => 'Home';
 
   @override
-  String get edited_page_title => 'Edited photos';
-
-  @override
   String get ai_page_title => 'Generate with AI';
 
   @override
   String get edit_page_title => 'Edit';
+
+  @override
+  String get photo_editing_page_title => 'Photos';
+
+  @override
+  String get videos_editing_page_title => 'Videos';
+
+  @override
+  String get generate_ai_page_title => 'Generate';
+
+  @override
+  String get edited_page_title => 'Edited photos and videos';
 
   @override
   String get not_logged_in => 'Not signed in';

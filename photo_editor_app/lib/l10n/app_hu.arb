@@ -6,9 +6,12 @@
   "collage_page_title": "Készíts kollázsokat",
   "profile_page_title": "Fiók",
   "home_page_title": "Főoldal",
-  "edited_page_title": "Szerkesztett képek",
   "ai_page_title": "AI generálás",
   "edit_page_title": "Szerkesztés",
+  "photo_editing_page_title": "Fotók",
+  "videos_editing_page_title": "Videók",
+  "generate_ai_page_title": "Generálás",
+  "edited_page_title": "Szerkesztett képek és videók",
 
   "not_logged_in": "Nincs bejelentkezve",
   "logged_in_as": "Bejelentkezve",

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:photo_editor_app/frontend/pages/edit_photo/editing.dart';
+import 'package:photo_editor_app/frontend/pages/profile/profile_page.dart';
 import 'package:provider/provider.dart';
 import '../../../l10n/app_localizations.dart';
-import '../pages/edited_photos/edited_photos.dart';
+import '../pages/edited_files/edited_files_page.dart';
+import '../pages/editing_image/edit_images_page.dart';
+import '../pages/editing_video/edit_videos_page.dart';
 import '../pages/generate_ai/ai.dart';
-import '../pages/home/home_page.dart';
 import '../pages/profile/accent_color_provider.dart';
 
 class WindowsMenu extends StatefulWidget {
@@ -37,18 +38,18 @@ class _WindowsMenuState extends State<WindowsMenu> {
 
   List<Map<String, dynamic>> _navItems(BuildContext context) => [
     {
-      "icon": Icons.home_outlined,
+      "icon": Icons.insert_photo_outlined,
       "label": AppLocalizations.of(context)!.home_page_title,
-      "widget": HomePage(
+      "widget": EditImagesPage(
         onToggleTheme: widget.toggleTheme,
         userId: widget.userId,
         isDarkMode: widget.isDarkMode,
       ),
     },
     {
-      "icon": Icons.photo_outlined,
+      "icon": Icons.camera_roll_outlined,
       "label": AppLocalizations.of(context)!.edit_page_title,
-      "widget": EditingPage(
+      "widget": EditVideosPage(
         onToggleTheme: widget.toggleTheme,
         userId: widget.userId,
         isDarkMode: widget.isDarkMode,
@@ -66,7 +67,16 @@ class _WindowsMenuState extends State<WindowsMenu> {
     {
       "icon": Icons.folder_open_rounded,
       "label": AppLocalizations.of(context)!.edited_page_title,
-      "widget": EditedPhotosPage(
+      "widget": EditedFilesPage(
+        onToggleTheme: widget.toggleTheme,
+        userId: widget.userId,
+        isDarkMode: widget.isDarkMode,
+      ),
+    },
+    {
+      "icon": Icons.person,
+      "label": AppLocalizations.of(context)!.profile_page_title,
+      "widget": ProfilePage(
         onToggleTheme: widget.toggleTheme,
         userId: widget.userId,
         isDarkMode: widget.isDarkMode,
