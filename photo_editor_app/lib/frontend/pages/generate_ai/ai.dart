@@ -31,25 +31,29 @@ class AiPage extends StatelessWidget {
         children: [
           CustomScrollView(
             slivers: [
+              // Appbar
               SliverAppBar(
                 backgroundColor: Colors.transparent,
-                pinned: true,
-                floating: false,
-                expandedHeight: 70,
+                surfaceTintColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                pinned: false,
+                expandedHeight: 50,
                 leadingWidth: 90,
                 automaticallyImplyLeading: false,
                 centerTitle: true,
+                floating: true,
+                snap: true,
                 // If this enabled than it's blurry
                 flexibleSpace: ClipRRect(
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
                     child: Container(
-                      color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                      color: backgroundColor?.withOpacity(0.5),
                     ),
                   ),
                 ),
                 title: Text(
-                  AppLocalizations.of(context)!.profile_page_title,
+                  AppLocalizations.of(context)!.generate_ai_page_title,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

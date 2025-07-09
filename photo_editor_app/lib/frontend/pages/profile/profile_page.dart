@@ -1,10 +1,7 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../functionalities/basic_functionality.dart';
 import '../../language_support/language_picker.dart';
 import 'accent_color_provider.dart';
 
@@ -47,37 +44,21 @@ class _ProfilePageState extends State<ProfilePage> {
             slivers: [
               SliverAppBar(
                 backgroundColor: Colors.transparent,
-                pinned: true,
-                expandedHeight: 70,
+                surfaceTintColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                pinned: false,
+                expandedHeight: 50,
                 leadingWidth: 90,
                 automaticallyImplyLeading: false,
-                leading: TextButton.icon(
-                  style: TextButton.styleFrom(
-                    foregroundColor: accentColor,
-                    padding: const EdgeInsets.only(left: 8.0),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    size: 20,
-                  ),
-                  label: Text(
-                    AppLocalizations.of(context)!.back_button_text,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
                 centerTitle: true,
+                floating: true,
+                snap: true,
                 // If this enabled than it's blurry
                 flexibleSpace: ClipRRect(
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
                     child: Container(
-                      color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                      color: backgroundColor?.withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -132,3 +113,26 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+
+/* Back button
+leading: TextButton.icon(
+                  style: TextButton.styleFrom(
+                    foregroundColor: accentColor,
+                    padding: const EdgeInsets.only(left: 8.0),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    size: 20,
+                  ),
+                  label: Text(
+                    AppLocalizations.of(context)!.back_button_text,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+ */

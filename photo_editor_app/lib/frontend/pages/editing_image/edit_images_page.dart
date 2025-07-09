@@ -6,8 +6,8 @@ import '../profile/accent_color_provider.dart';
 import '../profile/profile_page.dart';
 import '../../../l10n/app_localizations.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({
+class EditImagesPage extends StatefulWidget {
+  const EditImagesPage({
     super.key,
     required this.onToggleTheme,
     required this.isDarkMode,
@@ -19,10 +19,10 @@ class HomePage extends StatefulWidget {
   final String? userId;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<EditImagesPage> createState() => _EditImagesPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _EditImagesPageState extends State<EditImagesPage> {
   @override
   void initState() {
     super.initState();
@@ -32,7 +32,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final accentColor = Provider.of<AccentColorProvider>(context).accentColor;
     final backgroundColor = Theme.of(context).drawerTheme.backgroundColor ??
-        (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF141414) : Colors.grey[100]);
+        (Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF141414)
+            : Colors.grey[100]);
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -43,45 +45,30 @@ class _HomePageState extends State<HomePage> {
               // Appbar
               SliverAppBar(
                 backgroundColor: Colors.transparent,
-                pinned: true,
-                expandedHeight: 70,
+                surfaceTintColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                pinned: false,
+                expandedHeight: 50,
                 leadingWidth: 90,
                 automaticallyImplyLeading: false,
                 centerTitle: true,
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: GestureDetector(
-                      onTap: () async {
-                        final shouldRefresh = await Navigator.push(
-                          context,
-                          Essentials().createSlideRoute(
-                            ProfilePage(
-                              onToggleTheme: widget.onToggleTheme,
-                              isDarkMode: widget.isDarkMode,
-                              userId: widget.userId,
-                            ),
-                          ),
-                        );
-                      },
-                      child: widget.userId == null
-                          ? const Icon(Icons.person, size: 24)
-                          : CircleAvatar(
-                        radius: 20,
-                        backgroundImage: NetworkImage(
-                          'https://your-api.com/user/$widget.userId/avatar.jpg',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                floating: true,
+                snap: true,
                 // If this enabled than it's blurry
                 flexibleSpace: ClipRRect(
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
                     child: Container(
-                      color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                      color: backgroundColor?.withOpacity(0.5),
                     ),
+                  ),
+                ),
+                title: Text(
+                  AppLocalizations.of(context)!.photo_editing_page_title,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: accentColor,
                   ),
                 ),
               ),
@@ -89,7 +76,7 @@ class _HomePageState extends State<HomePage> {
               // Body
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
                   child: Text(
                     AppLocalizations.of(context)!.photos_section_text,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -125,36 +112,7 @@ class _HomePageState extends State<HomePage> {
                 child: SizedBox(height: 10),
               ),
 
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
-                  child: Text(
-                    AppLocalizations.of(context)!.videos_section_text,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
 
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                sliver: SliverGrid(
-                  delegate: SliverChildListDelegate(
-                    [
-                      _buildSection(context, icon: Icons.camera, title: AppLocalizations.of(context)!.clips_button_text, onTap: () {}),
-                      _buildSection(context, icon: Icons.movie_creation_outlined, title: AppLocalizations.of(context)!.movies_button_text, onTap: () {}),
-                      _buildSection(context, icon: Icons.subtitles_outlined, title: AppLocalizations.of(context)!.subtitles_button_text, onTap: () {}),
-                    ],
-                  ),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    childAspectRatio: 1.3,
-                  ),
-                ),
-              ),
             ],
           ),
         ],

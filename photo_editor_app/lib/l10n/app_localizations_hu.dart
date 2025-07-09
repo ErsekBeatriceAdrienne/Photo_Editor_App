@@ -22,13 +22,22 @@ class AppLocalizationsHu extends AppLocalizations {
   String get home_page_title => 'Főoldal';
 
   @override
-  String get edited_page_title => 'Szerkesztett képek';
-
-  @override
   String get ai_page_title => 'AI generálás';
 
   @override
   String get edit_page_title => 'Szerkesztés';
+
+  @override
+  String get photo_editing_page_title => 'Fotók';
+
+  @override
+  String get videos_editing_page_title => 'Videók';
+
+  @override
+  String get generate_ai_page_title => 'Generálás';
+
+  @override
+  String get edited_page_title => 'Szerkesztett képek és videók';
 
   @override
   String get not_logged_in => 'Nincs bejelentkezve';
