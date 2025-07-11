@@ -101,8 +101,8 @@ class _PCMenuState extends State<PCMenu> {
           filter: ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
           child: Container(
             color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.black.withOpacity(0.3)
-                : Colors.white.withOpacity(0.2),
+                ? Colors.black.withOpacity(0.01)
+                : Colors.white.withOpacity(0.01),
           ),
         ),
         Scaffold(
@@ -121,14 +121,20 @@ class _PCMenuState extends State<PCMenu> {
                   },
                   child: ClipRRect(
                     child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                      filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                       child: Container(
                         width: sidebarWidth,
-                        decoration: const BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border(
-                            right: BorderSide(color: Colors.black12, width: 0.5),
-                          ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.black.withOpacity(0.4)
+                              : Colors.white.withOpacity(0.2),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.05),
+                              blurRadius: 10,
+                              offset: Offset(2, 0),
+                            ),
+                          ],
                         ),
                         child: Column(
                           children: [
@@ -150,6 +156,8 @@ class _PCMenuState extends State<PCMenu> {
                                 title: sidebarWidth > _minSidebarWidth + 10
                                     ? Text(
                                   label,
+                                  overflow: TextOverflow.ellipsis, 
+                                  maxLines: 1,
                                   style: TextStyle(
                                     fontWeight:
                                     selected ? FontWeight.bold : FontWeight.normal,

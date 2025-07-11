@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_acrylic/window.dart' as acrylic;
+import 'package:flutter_acrylic/window_effect.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_editor_app/frontend/functionalities/basic_functionality.dart';
 import 'package:photo_editor_app/frontend/language_support/locale_provider.dart';
@@ -19,6 +21,12 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  await acrylic.Window.initialize();
+  await acrylic.Window.setEffect(
+    effect: WindowEffect.acrylic,
+    color: Colors.transparent,
+  );
 
   runApp(
     MultiProvider(
