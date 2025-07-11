@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -8,7 +11,7 @@ import 'package:provider/provider.dart';
 import '../../../l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'frontend/navigation_menu/phone_nav_menu.dart';
-import 'frontend/navigation_menu/windows_nav_menu.dart';
+import 'frontend/navigation_menu/pc_nav_menu.dart';
 import 'frontend/pages/profile/accent_color_provider.dart';
 
 Future<void> main() async {
@@ -28,6 +31,17 @@ Future<void> main() async {
       child: const MyApp(),
     ),
   );
+
+  if (Platform.isMacOS) {
+    doWhenWindowReady(() {
+      final win = appWindow;
+      win.minSize = const Size(800, 600);
+      win.size = const Size(1024, 768);
+      win.alignment = Alignment.center;
+      win.title = "Ice"; // vagy bármi más
+      win.show();
+    });
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -65,24 +79,29 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _requestPermissions() async {
-    final photosStatus = await Permission.photos.request();
-    final videosStatus = await Permission.videos.request();
-    final storageStatus = await Permission.storage.request();
+    if (Platform.isAndroid || Platform.isIOS) {
+      await Permission.photos.request();
+      await Permission.videos.request();
+      await Permission.storage.request();
+    } else {
+      // Windows, and Macos
+    }
   }
+
 
   Future<void> _startInitialization() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('userId');
 
     Widget nextScreen;
-    if (Platform.isWindows) {
-      nextScreen = WindowsMenu(
+    if (Platform.isWindows || Platform.isMacOS) {
+      nextScreen = PCMenu(
         toggleTheme: _toggleTheme,
         isDarkMode: _themeMode == ThemeMode.dark,
         userId: userId,
       );
     } else {
-      nextScreen = AndroidMenu(
+      nextScreen = PhoneMenu(
         toggleTheme: _toggleTheme,
         isDarkMode: _themeMode == ThemeMode.dark,
         userId: userId,
@@ -120,6 +139,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Lixy',
       themeMode: _themeMode,
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.transparent,
         colorScheme: ColorScheme.fromSeed(seedColor: _accentColor),
         useMaterial3: true,
         brightness: Brightness.light,

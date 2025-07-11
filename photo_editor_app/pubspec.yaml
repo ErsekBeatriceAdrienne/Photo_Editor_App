@@ -21,6 +21,8 @@ dependencies:
   photo_manager: ^3.7.1
   image_picker: ^1.1.2
 
+  bitsdojo_window: ^0.1.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

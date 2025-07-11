@@ -28,5 +28,15 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+
+    <key>NSWindowBackgroundColor</key>
+    <string>clear</string>
+    <key>NSVisualEffectMaterial</key>
+    <string>hudWindow</string>
+    <key>NSVisualEffectBlendingMode</key>
+    <string>behindWindow</string>
+    <key>NSVisualEffectState</key>
+    <string>active</string>
+
 </dict>
 </plist>
