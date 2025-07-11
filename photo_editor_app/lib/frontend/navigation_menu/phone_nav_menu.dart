@@ -10,13 +10,13 @@ import '../../../l10n/app_localizations.dart';
 import '../pages/profile/accent_color_provider.dart';
 import '../pages/profile/profile_page.dart';
 
-class AndroidMenu extends StatefulWidget
+class PhoneMenu extends StatefulWidget
 {
   final VoidCallback toggleTheme;
   final String? userId;
   final bool isDarkMode;
 
-  const AndroidMenu({
+  const PhoneMenu({
     super.key,
     required this.toggleTheme,
     required this.isDarkMode,
@@ -24,10 +24,10 @@ class AndroidMenu extends StatefulWidget
   });
 
   @override
-  _AndroidMenuState createState() => _AndroidMenuState();
+  _PhoneMenuState createState() => _PhoneMenuState();
 }
 
-class _AndroidMenuState extends State<AndroidMenu>
+class _PhoneMenuState extends State<PhoneMenu>
 {
   int _currentIndex = 0;
   final List<Widget> _pages = [];

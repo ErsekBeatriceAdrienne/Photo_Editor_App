@@ -33,7 +33,9 @@ class _EditVideosPageState extends State<EditVideosPage> {
   @override
   void initState() {
     super.initState();
-    _loadGalleryImages();
+    if (Platform.isAndroid || Platform.isIOS) {
+      _loadGalleryImages();
+    }
   }
 
   Future<void> _loadGalleryImages() async {
