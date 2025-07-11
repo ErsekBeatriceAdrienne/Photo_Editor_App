@@ -124,9 +124,9 @@ class _PCMenuState extends State<PCMenu> {
                       filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                       child: Container(
                         width: sidebarWidth,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.transparent,
-                          border: const Border(
+                          border: Border(
                             right: BorderSide(color: Colors.black12, width: 0.5),
                           ),
                         ),
