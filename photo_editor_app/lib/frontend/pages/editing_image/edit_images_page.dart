@@ -1,10 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:photo_editor_app/frontend/functionalities/basic_functionality.dart';
+import 'package:photo_editor_app/frontend/pages/editing_image/edit_mode/edit_page.dart';
 import 'package:provider/provider.dart';
 import '../profile/accent_color_provider.dart';
 import '../profile/profile_page.dart';
 import '../../../l10n/app_localizations.dart';
+import 'dart:typed_data';
+import 'package:photo_manager/photo_manager.dart';
 
 class EditImagesPage extends StatefulWidget {
   const EditImagesPage({
@@ -30,9 +33,16 @@ class _EditImagesPageState extends State<EditImagesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final accentColor = Provider.of<AccentColorProvider>(context).accentColor;
-    final backgroundColor = Theme.of(context).drawerTheme.backgroundColor ??
-        (Theme.of(context).brightness == Brightness.dark
+    final accentColor = Provider
+        .of<AccentColorProvider>(context)
+        .accentColor;
+    final backgroundColor = Theme
+        .of(context)
+        .drawerTheme
+        .backgroundColor ??
+        (Theme
+            .of(context)
+            .brightness == Brightness.dark
             ? const Color(0xFF141414)
             : Colors.grey[100]);
 
@@ -79,7 +89,11 @@ class _EditImagesPageState extends State<EditImagesPage> {
                   padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
                   child: Text(
                     AppLocalizations.of(context)!.photos_section_text,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -91,12 +105,103 @@ class _EditImagesPageState extends State<EditImagesPage> {
                 sliver: SliverGrid(
                   delegate: SliverChildListDelegate(
                     [
-                      _buildSection(context, icon: Icons.edit, title: AppLocalizations.of(context)!.edit_page_title, onTap: () {}),
-                      _buildSection(context, icon: Icons.crop, title: AppLocalizations.of(context)!.crop_image_button_text, onTap: () {}),
-                      _buildSection(context, icon: Icons.grid_view_outlined, title: AppLocalizations.of(context)!.collage_button_text, onTap: () {}),
-                      _buildSection(context, icon: Icons.filter_frames_outlined, title: AppLocalizations.of(context)!.frames_button_text, onTap: () {}),
-                      _buildSection(context, icon: Icons.grade_outlined, title: AppLocalizations.of(context)!.generate_button_text, onTap: () {}),
-                      _buildSection(context, icon: Icons.filter, title: AppLocalizations.of(context)!.filters_for_image_button_text, onTap: () {}),
+                      _buildSection(context, icon: Icons.edit,
+                        title: AppLocalizations.of(context)!.edit_page_title,
+                        onTap: () async {
+                          final PermissionState ps = await PhotoManager
+                              .requestPermissionExtend();
+                          if (!ps.isAuth) return;
+
+                          final List<
+                              AssetPathEntity> albums = await PhotoManager
+                              .getAssetPathList(type: RequestType.image);
+                          if (albums.isEmpty) return;
+
+                          final List<AssetEntity> images = await albums.first
+                              .getAssetListPaged(page: 0, size: 100);
+                          if (images.isEmpty) return;
+
+                          // Képkiválasztás dialoggal (pl. első kép demo célra)
+                          final selected = await showDialog<AssetEntity>(
+                            context: context,
+                            builder: (ctx) =>
+                                AlertDialog(
+                                  title: const Text("Válassz egy képet"),
+                                  content: SizedBox(
+                                    width: double.maxFinite,
+                                    height: 300,
+                                    child: GridView.builder(
+                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 4,
+                                        mainAxisSpacing: 4,
+                                      ),
+                                      itemCount: images.length,
+                                      itemBuilder: (context, index) {
+                                        return FutureBuilder<Uint8List?>(
+                                          future: images[index]
+                                              .thumbnailDataWithSize(
+                                              const ThumbnailSize(200, 200)),
+                                          builder: (context, snapshot) {
+                                            if (!snapshot.hasData) {
+                                              return const SizedBox();
+                                            }
+                                            return GestureDetector(
+                                              onTap: () =>
+                                                  Navigator.pop(
+                                                      context, images[index]),
+                                              child: Image.memory(
+                                                  snapshot.data!,
+                                                  fit: BoxFit.cover),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                          );
+
+                          if (selected == null) return;
+
+                          final file = await selected.file;
+                          if (file == null) return;
+                          final Uint8List imageData = await file.readAsBytes();
+
+                          if (context.mounted) {
+                            Navigator.push(
+                              context,
+                              Essentials().createSlideRoute(
+                                    EditPhotoPage(
+                                      onToggleTheme: widget.onToggleTheme,
+                                      isDarkMode: widget.isDarkMode,
+                                      userId: widget.userId,
+                                      imageBytes: imageData,
+                                    ),
+                              ),
+                            );
+                          }
+                        },),
+                      _buildSection(context, icon: Icons.crop,
+                          title: AppLocalizations.of(context)!
+                              .crop_image_button_text,
+                          onTap: () {}),
+                      _buildSection(context, icon: Icons.grid_view_outlined,
+                          title: AppLocalizations.of(context)!
+                              .collage_button_text,
+                          onTap: () {}),
+                      _buildSection(context, icon: Icons.filter_frames_outlined,
+                          title: AppLocalizations.of(context)!
+                              .frames_button_text,
+                          onTap: () {}),
+                      _buildSection(context, icon: Icons.grade_outlined,
+                          title: AppLocalizations.of(context)!
+                              .generate_button_text,
+                          onTap: () {}),
+                      _buildSection(context, icon: Icons.filter,
+                          title: AppLocalizations.of(context)!
+                              .filters_for_image_button_text,
+                          onTap: () {}),
                     ],
                   ),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
