@@ -1,5 +1,3 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -51,8 +49,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get permission_required_title => 'Engedély szükséges';
 
   @override
-  String get permission_required_message =>
-      'A teljes funkcionalitás érdekében kérlek, adj engedélyt a galéria és fájlok elérésére.';
+  String get permission_required_message => 'A teljes funkcionalitás érdekében kérlek, adj engedélyt a galéria és fájlok elérésére.';
 
   @override
   String get go_to_settings => 'Beállítások megnyitása';

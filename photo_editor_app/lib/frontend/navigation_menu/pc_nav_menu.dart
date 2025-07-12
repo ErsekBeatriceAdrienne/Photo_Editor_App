@@ -127,7 +127,7 @@ class _PCMenuState extends State<PCMenu> {
                         decoration: BoxDecoration(
                           color: Theme.of(context).brightness == Brightness.dark
                               ? Colors.black.withOpacity(0.4)
-                              : Colors.white.withOpacity(0.2),
+                              : Colors.grey.shade600.withOpacity(0.2),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.05),
