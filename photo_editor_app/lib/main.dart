@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/window.dart' as acrylic;
@@ -13,9 +12,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'frontend/navigation_menu/phone_nav_menu.dart';
 import 'frontend/navigation_menu/pc_nav_menu.dart';
 import 'frontend/pages/profile/accent_color_provider.dart';
+import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+
+  const WindowOptions windowOptions = WindowOptions(
+    size: Size(1024, 720),
+    minimumSize: Size(800, 600),
+    maximumSize: Size(1920, 1080),
+    center: true,
+    backgroundColor: Colors.transparent,
+    title: 'Lixy',
+  );
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -28,16 +38,23 @@ Future<void> main() async {
     color: Colors.transparent,
   );
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => LocaleProvider()),
-        ChangeNotifierProvider(create: (_) => AccentColorProvider()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  await windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.show();
+    await windowManager.focus();
+
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => LocaleProvider()),
+          ChangeNotifierProvider(create: (_) => AccentColorProvider()),
+        ],
+        child: const MyApp(),
+      ),
+    );
+  });
 }
+
+
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
