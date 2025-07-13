@@ -22,11 +22,13 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  await acrylic.Window.initialize();
-  await acrylic.Window.setEffect(
-    effect: WindowEffect.acrylic,
-    color: Colors.transparent,
-  );
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    await acrylic.Window.initialize();
+    await acrylic.Window.setEffect(
+      effect: WindowEffect.acrylic,
+      color: Colors.transparent,
+    );
+  }
 
   runApp(
     MultiProvider(
