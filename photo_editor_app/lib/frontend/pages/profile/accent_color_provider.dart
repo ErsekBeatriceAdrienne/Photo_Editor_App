@@ -13,12 +13,14 @@ class AccentColorPickerBottomSheet extends StatelessWidget {
   });
 
   final List<Color> _colors = const [
-    Colors.blueAccent,
-    Colors.redAccent,
-    Colors.green,
-    Colors.orange,
+    Colors.blue,
     Colors.purple,
-    Colors.pinkAccent,
+    Colors.pink,
+    Colors.red,
+    Colors.orange,
+    Colors.yellow,
+    Colors.green,
+    Colors.teal,
     Color(0xFFFFC1E3),
   ];
 

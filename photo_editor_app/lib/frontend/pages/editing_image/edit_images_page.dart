@@ -219,7 +219,7 @@ class _EditImagesPageState extends State<EditImagesPage> {
       BuildContext context, Color accentColor, Color? backgroundColor) {
     return Center(
       child: Text(
-        "Ez az asztali verzió tartalma",
+        "Ez az asztali verzió kep tartalma",
         style: TextStyle(color: accentColor, fontSize: 20),
       ),
     );
