@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_editor_app/frontend/functionalities/basic_functionality.dart';
 import 'package:photo_editor_app/frontend/pages/editing_image/edit_mode/edit_page.dart';
@@ -128,7 +129,8 @@ class _EditImagesPageState extends State<EditImagesPage> {
   }
 
   Widget _buildSliverAppBarMobile(
-      BuildContext context, Color accentColor, Color? backgroundColor) {
+      BuildContext context, Color accentColor, Color? backgroundColor)
+  {
     return SliverAppBar(
       backgroundColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
@@ -164,7 +166,8 @@ class _EditImagesPageState extends State<EditImagesPage> {
         required IconData icon,
         required String title,
         required VoidCallback onTap,
-      }) {
+      })
+  {
     final accentColor = Provider.of<AccentColorProvider>(context).accentColor;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final textColor =
@@ -218,9 +221,41 @@ class _EditImagesPageState extends State<EditImagesPage> {
   Widget _buildDesktopBody(
       BuildContext context, Color accentColor, Color? backgroundColor) {
     return Center(
-      child: Text(
-        "Ez az asztali verzió kep tartalma",
-        style: TextStyle(color: accentColor, fontSize: 20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Ez az asztali verzió képszerkesztője",
+            style: TextStyle(color: accentColor, fontSize: 20),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () async {
+              FilePickerResult? result = await FilePicker.platform.pickFiles(
+                type: FileType.image,
+              );
+
+              if (result != null) {
+                final file = File(result.files.single.path!);
+                final bytes = await file.readAsBytes();
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => EditPhotoPage(
+                      onToggleTheme: widget.onToggleTheme,
+                      isDarkMode: widget.isDarkMode,
+                      userId: widget.userId,
+                      imageBytes: bytes,
+                    ),
+                  ),
+                );
+              }
+            },
+            child: const Text("Kép kiválasztása"),
+          ),
+
+        ],
       ),
     );
   }

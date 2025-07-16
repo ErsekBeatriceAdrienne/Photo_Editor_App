@@ -22,7 +22,9 @@ class EditPhotoPage extends StatelessWidget {
         title: const Text('Kép szerkesztése'),
       ),
       body: Center(
-        child: Image.memory(imageBytes),
+        child: InteractiveViewer(
+          child: Image.memory(imageBytes),
+        ),
       ),
     );
   }
