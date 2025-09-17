@@ -43,12 +43,15 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
   }
 
   Future<void> _rotate90() async {
+    setState(() => _isProcessing = true);
     try {
       final data = _displayedImage;
+
       final decoded = img_pkg.decodeImage(data);
       if (decoded == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Nem sikerült dekódolni a képet.')));
+          const SnackBar(content: Text('Nem sikerült dekódolni a képet.')),
+        );
         return;
       }
 
@@ -59,10 +62,17 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
         _editedImage = rotatedBytes;
       });
 
-      _cropController.image = rotatedBytes;
-    } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Forgatás hiba: $e')));
+      if (_isCropping) {
+        _cropController.image = rotatedBytes;
+      }
+
+    } catch (e, st) {
+      debugPrint('Rotate error: $e\n$st');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Forgatás hiba: $e')),
+      );
+    } finally {
+      setState(() => _isProcessing = false);
     }
   }
 
@@ -164,7 +174,7 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
           ),
 
           Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.centerLeft,
             child: ClipRRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
