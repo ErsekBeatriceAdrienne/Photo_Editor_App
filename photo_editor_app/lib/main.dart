@@ -85,7 +85,6 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-
   Future<void> _startInitialization() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('userId');
